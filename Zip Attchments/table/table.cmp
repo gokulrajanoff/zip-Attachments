@@ -1,0 +1,48 @@
+<aura:component controller="GrZipController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+	 <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <ltng:require scripts="{!$Resource.jsZip+'/JsZip/jszip.js'}"
+    afterScriptsLoaded="{!c.afterScriptsLoaded}" />
+    <aura:attribute name="selectedFileMessage" type="String"/>
+		<aura:attribute name="Wrappers" type="List"/>
+    <aura:attribute name="showDownload" type="boolean" default="false"/>
+    <aura:attribute name="selectAll" type="boolean" default="false"/>
+        <aura:if isTrue="{!v.showDownload}">
+                       <ui:button press="{!c.bulkDownloadOption2}" label="Bulk Download"/>
+        </aura:if>
+    {!v.selectedFileMessage}
+    <table class="slds-table slds-table--bordered slds-table--cell-buffer">
+            <thead>
+                <tr class="slds-text-title--caps">
+                    <th scope="col">
+                        <div class="slds-truncate" style="font-weight: bold;" title="Select"><ui:inputCheckbox change="{!c.selectAll}" value="{!v.selectAll}"/><span class="slds-p-left_xx-small">Select</span></div>
+                    </th>
+                    <th scope="col">
+                        <div class="slds-truncate" style="font-weight: bold;" title="Name">Name</div>
+                    </th>
+                    <th scope="col">
+                        <div class="slds-truncate" style="font-weight: bold;" title="Created By">Content</div>
+                    </th>
+                </tr>
+            </thead>
+            <!--table body start, 
+        Iterate contact list as a <tr>
+        -->
+            <tbody>
+                <aura:iteration items="{!v.Wrappers}" var="element">
+                    <tr>
+                        <td class="cell">
+                            <ui:inputCheckbox change="{!c.onCheck}" value="{!element.selected}"/>
+                        </td>
+                        <td class="cell">
+                            <ui:outputText value="{!element.Name}" />
+                        </td>
+                        
+                        <td class="cell">
+                            <ui:outputText value="{!element.Content}" />
+                        </td>
+                    </tr>
+                    
+                </aura:iteration>
+            </tbody>
+        </table>
+</aura:component>
